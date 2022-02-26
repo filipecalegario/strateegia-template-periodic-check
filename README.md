@@ -1,2 +1,2 @@
-# strateegia-simple-agent
+# template for strateegia periodic check
 
