@@ -122,13 +122,19 @@ function initializePeriodicCheckButtonControls() {
             stopPeriodicCheck();
         }
     });
+    let intervals = d3.select("#intervals");
+    const intervalsOptions = [{ value: "1000", text: "1 segundo" }, { value: "5000", text: "5 segundos" }, { value: "10000", text: "10 segundos" }, { value: "15000", text: "15 segundos" }, { value: "30000", text: "30 segundos" }, { value: "60000", text: "1 minuto" }, { value: "120000", text: "2 minutos" }, { value: "300000", text: "5 minutos" }, { value: "600000", text: "10 minutos" }, { value: "1800000", text: "30 minutos" }, { value: "3600000", text: "1 hora" }];
+    intervalsOptions.forEach(function (interval) {
+        intervals.append("option").attr("value", interval.value).text(interval.text).classed("dropdown-item", true);
+    });
 }
 
 function startPeriodicCheck() {
     let button = d3.select("#periodic-check-button");
     let selectedDivPoint = localStorage.getItem("selectedDivPoint");
     if (selectedDivPoint !== null && selectedDivPoint !== "null") {
-        intervalCheck = setInterval(() => { periodicCheck(selectedDivPoint) }, 500);
+        const chosenInterval = d3.select("#intervals").property("value");
+        intervalCheck = setInterval(() => { periodicCheck(selectedDivPoint) }, chosenInterval);
 
         button.text("parar checagem periódica");
         button.classed("btn-outline-success", false);
